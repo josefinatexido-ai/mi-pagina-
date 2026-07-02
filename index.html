@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cepa Viva — Viticultura, Sommellerie & Cultura del Vino</title>
+<meta name="description" content="Divulgación sobre viticultura, sommellerie y cultura del vino: cepas, reseñas, radio, libros y entrevistas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --paper:        #F4EFE3;   /* washi beige */
+    --paper-deep:    #ECE3D1;   /* beige más denso, para bloques */
+    --ink:           #241611;   /* casi negro, tibio */
+    --bordeaux:      #5C1122;   /* bordeaux profundo */
+    --bordeaux-deep: #3A0A12;   /* bordeaux/negro, detalles oscuros */
+    --gold:          #A9793F;   /* cobre / cera envejecida */
+    --gold-soft:     #C6A46B;
+    --line:          rgba(36,22,17,0.14);
+    --paper-rgb:      244,239,227;
+
+    --font-display: 'Fraunces', 'Iowan Old Style', 'Georgia', serif;
+    --font-body:    'Inter', -apple-system, sans-serif;
+
+    --maxw: 1180px;
+    --gap:  clamp(1.2rem, 3vw, 2.4rem);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(92,17,34,0.05), transparent 45%),
+      radial-gradient(ellipse at 100% 0%, rgba(169,121,63,0.07), transparent 40%),
+      var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  ::selection{ background:var(--bordeaux); color:var(--paper); }
+
+  :focus-visible{
+    outline:2px solid var(--bordeaux);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding-inline: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:.55rem;
+    font-family:var(--font-body);
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--bordeaux);
+  }
+  .eyebrow::before{
+    content:'';
+    width:22px; height:1px;
+    background:var(--gold);
+  }
+
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    font-weight:500;
+    color:var(--bordeaux-deep);
+    margin:0;
+    letter-spacing:.005em;
+  }
+
+  .section-head{
+    display:flex;
+    flex-direction:column;
+    gap:.85rem;
+    max-width:640px;
+    margin-bottom: clamp(2.2rem, 4vw, 3.4rem);
+  }
+  .section-head h2{
+    font-size:clamp(1.9rem, 3.6vw, 2.7rem);
+    line-height:1.15;
+  }
+  .section-head p{
+    margin:0;
+    color:#4a3a30;
+    font-size:1.02rem;
+    max-width:52ch;
+  }
+
+  section{
+    padding-block: clamp(3.4rem, 7vw, 6rem);
+    position:relative;
+  }
+  section + section{
+    border-top:1px solid var(--line);
+  }
+
+  /* ============ NAV ============ */
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(var(--paper-rgb),0.86);
+    backdrop-filter:blur(10px) saturate(1.1);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-block:.9rem;
+  }
+  .brand-mark{
+    display:flex; align-items:center; gap:.6rem;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.18rem;
+    color:var(--bordeaux-deep);
+  }
+  .brand-mark .seal{
+    width:26px; height:26px; flex:none;
+  }
+  nav.links{
+    display:flex; gap:2rem;
+  }
+  nav.links a{
+    font-size:.86rem;
+    font-weight:500;
+    color:var(--ink);
+    position:relative;
+    padding-block:.2rem;
+  }
+  nav.links a::after{
+    content:'';
+    position:absolute; left:0; right:100%; bottom:-2px;
+    height:1px; background:var(--bordeaux);
+    transition:right .25s ease;
+  }
+  nav.links a:hover::after{ right:0; }
+
+  .nav-toggle{
+    display:none;
+    background:none; border:none;
+    font-size:1.3rem; color:var(--bordeaux-deep);
+  }
+
+  @media (max-width: 820px){
+    nav.links{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0;
+      background:var(--paper);
+      border-bottom:1px solid var(--line);
+      max-height:0; overflow:hidden;
+      transition:max-height .35s ease;
+    }
+    nav.links.open{ max-height:420px; }
+    nav.links a{
+      padding:1rem clamp(1.25rem,5vw,3rem);
+      border-top:1px solid var(--line);
+    }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    padding-block: clamp(3.6rem, 10vw, 7rem) clamp(3rem, 8vw, 5rem);
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap:clamp(2rem, 5vw, 4rem);
+    align-items:center;
+  }
+  .hero-eyebrow-row{
+    display:flex; align-items:center; gap:.8rem; margin-bottom:1.4rem;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.03;
+    font-weight:500;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--bordeaux);
+    font-weight:400;
+  }
+  .hero-lede{
+    margin:1.5rem 0 2.2rem;
+    font-size:1.12rem;
+    color:#4a3a30;
+    max-width:46ch;
+  }
+  .social-row{
+    display:flex; flex-wrap:wrap; gap:.7rem;
+  }
+  .social-pill{
+    display:inline-flex; align-items:center; gap:.55rem;
+    padding:.65rem 1.15rem;
+    border:1px solid var(--line);
+    border-radius:100px;
+    font-size:.86rem; font-weight:500;
+    background:rgba(255,255,255,0.35);
+    transition:all .2s ease;
+  }
+  .social-pill i{ color:var(--bordeaux); font-size:1rem; }
+  .social-pill:hover{
+    background:var(--bordeaux-deep);
+    border-color:var(--bordeaux-deep);
+    color:var(--paper);
+  }
+  .social-pill:hover i{ color:var(--gold-soft); }
+
+  /* Hero seal art */
+  .hero-art{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    aspect-ratio:1/1;
+  }
+  .hero-art .ring{
+    position:absolute; inset:0;
+    border-radius:50%;
+    border:1px dashed var(--gold);
+    animation:spin 60s linear infinite;
+  }
+  .hero-art .ring.r2{ inset:9%; border-style:solid; border-color:var(--line); animation-duration:90s; animation-direction:reverse; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .hero-art svg{ width:56%; height:56%; }
+
+  /* ============ CARDS: CEPAS ============ */
+  .grid-cepas{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:var(--gap);
+  }
+  .label-card{
+    position:relative;
+    background:linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.15));
+    border:1px solid var(--line);
+    padding:2rem 1.7rem 1.8rem;
+    display:flex; flex-direction:column; gap:1rem;
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .label-card::before, .label-card::after{
+    content:'';
+    position:absolute; width:14px; height:14px;
+    border:1px solid var(--gold);
+  }
+  .label-card::before{ top:8px; left:8px; border-right:none; border-bottom:none; }
+  .label-card::after{ bottom:8px; right:8px; border-left:none; border-top:none; }
+  .label-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 34px -20px rgba(58,10,18,0.35);
+    border-color:var(--gold);
+  }
+  .label-card .tag-row{
+    display:flex; flex-wrap:wrap; gap:.4rem;
+  }
+  .tag{
+    font-size:.68rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    padding:.3rem .6rem;
+    background:var(--bordeaux-deep); color:var(--paper);
+    border-radius:2px;
+  }
+  .tag.alt{ background:transparent; color:var(--bordeaux); border:1px solid var(--bordeaux); }
+  .label-card h3{
+    font-size:1.5rem;
+    display:flex; align-items:baseline; gap:.5rem;
+  }
+  .label-card h3 .origin{
+    font-family:var(--font-body);
+    font-size:.72rem; font-weight:600; letter-spacing:.05em;
+    color:var(--gold);
+    text-transform:uppercase;
+  }
+  .label-card p{ margin:0; color:#4a3a30; font-size:.95rem; }
+  .data-line{
+    display:flex; flex-wrap:wrap; gap:.5rem 1.4rem;
+    padding-top:.9rem; margin-top:.2rem;
+    border-top:1px dotted var(--line);
+    font-size:.83rem;
+  }
+  .data-line span{ color:#6b584c; }
+  .data-line b{ color:var(--bordeaux-deep); font-weight:700; }
+
+  /* ============ RADIO / PODCAST ============ */
+  .grid-radio{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:var(--gap);
+  }
+  .ep-card{
+    background:var(--bordeaux-deep);
+    color:var(--paper);
+    padding:1.9rem;
+    display:flex; flex-direction:column; gap:1rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .ep-card::before{
+    content:'';
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 100% 0%, rgba(169,121,63,0.25), transparent 55%);
+    pointer-events:none;
+  }
+  .ep-meta{
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:.75rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--gold-soft);
+  }
+  .ep-card h3{ color:var(--paper); font-size:1.3rem; font-weight:500; }
+  .ep-card p{ margin:0; color:rgba(244,239,227,0.75); font-size:.92rem; }
+  .btn{
+    display:inline-flex; align-items:center; gap:.6rem;
+    align-self:flex-start;
+    padding:.7rem 1.3rem;
+    font-size:.85rem; font-weight:600;
+    border:1px solid var(--gold-soft);
+    color:var(--paper);
+    background:transparent;
+    border-radius:2px;
+    transition:all .2s ease;
+    margin-top:.3rem;
+  }
+  .btn:hover{ background:var(--gold-soft); color:var(--bordeaux-deep); }
+  .btn.solid{
+    background:var(--bordeaux);
+    border-color:var(--bordeaux);
+    color:var(--paper);
+  }
+  .btn.solid:hover{ background:var(--bordeaux-deep); border-color:var(--gold-soft); }
+
+  /* ============ BIBLIOTECA ============ */
+  .grid-books{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:var(--gap);
+  }
+  .book-card{
+    display:flex; flex-direction:column; gap:1.1rem;
+  }
+  .book-cover{
+    aspect-ratio:3/4.2;
+    background:linear-gradient(155deg, var(--bordeaux) 0%, var(--bordeaux-deep) 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:1.6rem;
+    position:relative;
+    border:1px solid var(--bordeaux-deep);
+    box-shadow: 8px 8px 0 -2px rgba(0,0,0,0), 0 20px 30px -22px rgba(58,10,18,0.5);
+  }
+  .book-cover::after{
+    content:'';
+    position:absolute; inset:10px;
+    border:1px solid rgba(244,239,227,0.35);
+    pointer-events:none;
+  }
+  .book-cover .kicker{
+    font-size:.65rem; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--gold-soft); margin-bottom:.8rem;
+  }
+  .book-cover h3{
+    color:var(--paper);
+    font-size:1.3rem;
+    line-height:1.2;
+  }
+  .book-cover .glass{
+    width:30px; height:30px;
+    margin-top:1rem;
+    color:var(--gold-soft);
+  }
+  .book-card .synopsis{ color:#4a3a30; font-size:.92rem; margin:0; }
+  .book-card .btn{ align-self:flex-start; border-color:var(--bordeaux); color:var(--bordeaux-deep); }
+  .book-card .btn:hover{ background:var(--bordeaux); color:var(--paper); }
+
+  /* ============ ENTREVISTAS ============ */
+  .timeline{
+    display:flex; flex-direction:column;
+  }
+  .tl-item{
+    display:grid;
+    grid-template-columns:140px 24px 1fr;
+    gap:0 1.4rem;
+    padding-block:1.6rem;
+  }
+  .tl-item + .tl-item{ border-top:1px solid var(--line); }
+  .tl-date{
+    font-size:.8rem; font-weight:600; letter-spacing:.05em;
+    color:var(--gold);
+    padding-top:.2rem;
+  }
+  .tl-dot-col{
+    display:flex; justify-content:center;
+  }
+  .tl-dot-col .dot{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--bordeaux);
+    margin-top:.4rem;
+  }
+  .tl-content h3{
+    font-size:1.2rem; font-weight:500;
+    margin-bottom:.35rem;
+  }
+  .tl-content .role{
+    font-size:.83rem; color:var(--bordeaux); font-weight:600; margin-bottom:.5rem; display:block;
+  }
+  .tl-content p{ margin:0; color:#4a3a30; font-size:.93rem; }
+  .tl-content a.src{
+    display:inline-flex; align-items:center; gap:.4rem;
+    margin-top:.6rem; font-size:.83rem; font-weight:600; color:var(--bordeaux-deep);
+    border-bottom:1px solid var(--gold);
+  }
+
+  @media (max-width:640px){
+    .tl-item{ grid-template-columns:20px 1fr; }
+    .tl-date{ grid-column:1/-1; padding-top:0; }
+    .tl-dot-col{ padding-top:.3rem; }
+  }
+
+  /* ============ TIPS / DATA ============ */
+  .grid-tips{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:var(--gap);
+  }
+  .tip-card{
+    padding:1.6rem;
+    background:var(--paper-deep);
+    border-left:3px solid var(--bordeaux);
+    display:flex; flex-direction:column; gap:.7rem;
+  }
+  .tip-card .icon{
+    width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--bordeaux);
+    font-size:1.1rem;
+  }
+  .tip-card h3{ font-size:1.08rem; font-weight:600; font-family:var(--font-body); color:var(--bordeaux-deep); }
+  .tip-card p{ margin:0; font-size:.88rem; color:#4a3a30; }
+  .tip-card .cat{
+    font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold);
+    font-weight:700;
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background:var(--bordeaux-deep);
+    color:rgba(244,239,227,0.85);
+    padding-block:3rem 2rem;
+  }
+  .footer-inner{
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:2rem;
+    padding-bottom:2rem;
+    border-bottom:1px solid rgba(244,239,227,0.15);
+  }
+  footer h4{ color:var(--paper); font-size:1.3rem; font-weight:500; margin-bottom:.6rem; }
+  footer p{ margin:0; max-width:36ch; color:rgba(244,239,227,0.6); font-size:.9rem; }
+  .footer-social{ display:flex; gap:1rem; }
+  .footer-social a{
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(244,239,227,0.3);
+    display:flex; align-items:center; justify-content:center;
+    transition:all .2s ease;
+  }
+  .footer-social a:hover{ background:var(--gold-soft); border-color:var(--gold-soft); color:var(--bordeaux-deep); }
+  .footer-bottom{
+    padding-top:1.6rem;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:.6rem;
+    font-size:.78rem; color:rgba(244,239,227,0.45);
+  }
+
+  /* ============ REVEAL ANIMATION ============ */
+  .reveal{
+    opacity:0; transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-art{ max-width:260px; margin:0 auto; order:-1; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand-mark">
+      <svg class="seal" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" stroke="#5C1122" stroke-width="1.5"/>
+        <path d="M20 10c-3.5 0-6 3-6 6.5 0 4 3 6 3 9.5 0 1.7 1.3 3 3 3s3-1.3 3-3c0-3.5 3-5.5 3-9.5 0-3.5-2.5-6.5-6-6.5z" fill="#5C1122"/>
+      </svg>
+      Cepa Viva
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <nav class="links" id="navLinks">
+      <a href="#cepas">Cepas & Vinos</a>
+      <a href="#radio">Radio & Podcast</a>
+      <a href="#biblioteca">Biblioteca</a>
+      <a href="#entrevistas">Entrevistas</a>
+      <a href="#tips">Tips & Data</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy reveal">
+        <div class="hero-eyebrow-row">
+          <span class="eyebrow">Divulgación de vino</span>
+        </div>
+        <h1>El vino contado <em>con calma</em>,<br>bebido con curiosidad.</h1>
+        <p class="hero-lede">
+          Soy productora de contenidos sobre viticultura y sommellerie. Cada semana comparto cepas poco conocidas, reseñas honestas y las historias de quienes hacen el vino posible — desde el viñedo hasta la copa.
+        </p>
+        <div class="social-row">
+          <a class="social-pill" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a class="social-pill" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-spotify"></i> Spotify</a>
+          <a class="social-pill" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> YouTube</a>
+          <a class="social-pill" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>
+        </div>
+      </div>
+      <div class="hero-art reveal">
+        <div class="ring"></div>
+        <div class="ring r2"></div>
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 20c-9 0-16 8-16 17 0 10 8 15 8 25 0 4.4 3.6 8 8 8s8-3.6 8-8c0-10 8-15 8-25 0-9-7-17-16-17z" stroke="#5C1122" stroke-width="1.4"/>
+          <path d="M50 70v10M40 84h20" stroke="#5C1122" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M35 30c3 4 3 9 0 13M65 30c-3 4-3 9 0 13" stroke="#A9793F" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CEPAS Y VINOS ============ -->
+  <section id="cepas">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Fichas de cepas</span>
+        <h2>Uvas del mundo, vino por vino</h2>
+        <p>Retratos breves de variedades y etiquetas que vale la pena conocer, con los datos que un buen catador necesita a mano.</p>
+      </div>
+
+      <div class="grid-cepas">
+
+        <article class="label-card reveal">
+          <div class="tag-row"><span class="tag">Tinta</span><span class="tag alt">Rara</span></div>
+          <h3>Öküzgözü <span class="origin">Anatolia, Turquía</span></h3>
+          <p>Su nombre significa "ojo de buey", en honor al tamaño y color de sus bayas. Da vinos frescos, de <strong>acidez viva</strong> y fruta roja jugosa, muy alejados del estereotipo denso que se le suele atribuir a los tintos de Medio Oriente.</p>
+          <div class="data-line">
+            <span>Cuerpo <b>Medio</b></span>
+            <span>Taninos <b>Suaves</b></span>
+            <span>Sirve <b>16 °C</b></span>
+          </div>
+        </article>
+
+        <article class="label-card reveal">
+          <div class="tag-row"><span class="tag">Blanca</span><span class="tag alt">Autóctona</span></div>
+          <h3>Koshu <span class="origin">Yamanashi, Japón</span></h3>
+          <p>Uva de piel rosada usada para vinos blancos delicados. Ofrece <strong>notas cítricas sutiles</strong> y una textura casi salina, ideal para acompañar cocina japonesa sin opacar los sabores del plato.</p>
+          <div class="data-line">
+            <span>Cuerpo <b>Liviano</b></span>
+            <span>Acidez <b>Alta</b></span>
+            <span>Sirve <b>8 °C</b></span>
+          </div>
+        </article>
+
+        <article class="label-card reveal">
+          <div class="tag-row"><span class="tag">Blanca</span><span class="tag alt">Insignia</span></div>
+          <h3>Torrontés <span class="origin">Cafayate, Argentina</span></h3>
+          <p>Aromática por naturaleza, engaña al olfato con promesas de dulzor floral que en boca se resuelven <strong>secas y tensas</strong>. La altitud del Valle Calchaquí le da una frescura difícil de imitar.</p>
+          <div class="data-line">
+            <span>Cuerpo <b>Medio</b></span>
+            <span>Aromas <b>Intensos</b></span>
+            <span>Sirve <b>9 °C</b></span>
+          </div>
+        </article>
+
+        <article class="label-card reveal">
+          <div class="tag-row"><span class="tag">Tinta</span><span class="tag alt">De guarda</span></div>
+          <h3>Xinomavro <span class="origin">Naoussa, Grecia</span></h3>
+          <p>Comparada por muchos sommeliers con el Nebbiolo por su combinación de <strong>tanino firme</strong> y acidez elevada. Envejece con una elegancia que recién se entiende después de una década en botella.</p>
+          <div class="data-line">
+            <span>Cuerpo <b>Alto</b></span>
+            <span>Guarda <b>10+ años</b></span>
+            <span>Sirve <b>17 °C</b></span>
+          </div>
+        </article>
+
+        <article class="label-card reveal">
+          <div class="tag-row"><span class="tag">Blanca</span><span class="tag alt">Volcánica</span></div>
+          <h3>Assyrtiko <span class="origin">Santorini, Grecia</span></h3>
+          <p>Crece en suelos de ceniza volcánica, en parras trenzadas a ras del suelo. El resultado es un blanco de <strong>mineralidad punzante</strong> que conserva la acidez pese al calor extremo de la isla.</p>
+          <div class="data-line">
+            <span>Cuerpo <b>Medio</b></span>
+            <span>Mineralidad <b>Marcada</b></span>
+            <span>Sirve <b>9 °C</b></span>
+          </div>
+        </article>
+
+        <article class="label-card reveal">
+          <div class="tag-row"><span class="tag">Tinta</span><span class="tag alt">Histórica</span></div>
+          <h3>Criolla Chica <span class="origin">Cuyo, Argentina</span></h3>
+          <p>Llegada con los primeros colonos españoles, es la raíz genética de gran parte de la vitivinicultura sudamericana. Hoy vuelve como vino <strong>ligero y de bajo tanino</strong>, servido incluso fresco.</p>
+          <div class="data-line">
+            <span>Cuerpo <b>Liviano</b></span>
+            <span>Taninos <b>Bajos</b></span>
+            <span>Sirve <b>14 °C</b></span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RADIO & PODCAST ============ -->
+  <section id="radio">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Al aire</span>
+        <h2>Programa de radio & podcast</h2>
+        <p>Charlas semanales sobre vino, viñedos y las personas detrás de cada botella. Disponible en todas las plataformas de audio.</p>
+      </div>
+
+      <div class="grid-radio">
+
+        <article class="ep-card reveal">
+          <div class="ep-meta"><span>Episodio 42</span><span>28 jun 2026</span></div>
+          <h3>El terroir no es solo tierra</h3>
+          <p>Con la enóloga de una bodega de Valle de Uco, desarmamos el concepto de terroir y por qué el clima pesa tanto como el suelo.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-headphones"></i> Escuchar programa</a>
+        </article>
+
+        <article class="ep-card reveal">
+          <div class="ep-meta"><span>Episodio 41</span><span>21 jun 2026</span></div>
+          <h3>Vinos naturales, sin filtro</h3>
+          <p>Qué significa realmente "vino natural", sus riesgos y por qué generan tanta discusión entre sommeliers tradicionales.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-headphones"></i> Escuchar programa</a>
+        </article>
+
+        <article class="ep-card reveal">
+          <div class="ep-meta"><span>Episodio 40</span><span>14 jun 2026</span></div>
+          <h3>Maridajes que rompen la regla</h3>
+          <p>Combinaciones poco convencionales que funcionan mejor que el clásico "tinto con carne, blanco con pescado".</p>
+          <a class="btn" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-headphones"></i> Escuchar programa</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BIBLIOTECA ============ -->
+  <section id="biblioteca">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Para leer</span>
+        <h2>Biblioteca & publicaciones</h2>
+        <p>Libros y capítulos técnicos donde profundizo temas que no entran en un episodio de podcast.</p>
+      </div>
+
+      <div class="grid-books">
+
+        <article class="book-card reveal">
+          <div class="book-cover">
+            <span class="kicker">Ensayo · 2025</span>
+            <h3>Cepas Olvidadas</h3>
+            <svg class="glass" viewBox="0 0 24 24" fill="none"><path d="M12 3c-2.2 0-4 2-4 4.3 0 2.5 2 3.8 2 6 0 1.1.9 2 2 2s2-.9 2-2c0-2.2 2-3.5 2-6C16 5 14.2 3 12 3z" stroke="#C6A46B" stroke-width="1.2"/><path d="M12 15.3v3.7M9 21h6" stroke="#C6A46B" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <p class="synopsis">Un recorrido por doce variedades en riesgo de desaparecer y las bodegas que apuestan a rescatarlas.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> Leer capítulo</a>
+        </article>
+
+        <article class="book-card reveal">
+          <div class="book-cover">
+            <span class="kicker">Manual técnico · 2024</span>
+            <h3>Manual de Cata de Bolsillo</h3>
+            <svg class="glass" viewBox="0 0 24 24" fill="none"><path d="M12 3c-2.2 0-4 2-4 4.3 0 2.5 2 3.8 2 6 0 1.1.9 2 2 2s2-.9 2-2c0-2.2 2-3.5 2-6C16 5 14.2 3 12 3z" stroke="#C6A46B" stroke-width="1.2"/><path d="M12 15.3v3.7M9 21h6" stroke="#C6A46B" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <p class="synopsis">Guía compacta con vocabulario, fichas de cata imprimibles y rueda de aromas para llevar a cualquier degustación.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-download"></i> Descargar PDF</a>
+        </article>
+
+        <article class="book-card reveal">
+          <div class="book-cover">
+            <span class="kicker">Capítulo técnico · 2023</span>
+            <h3>Suelos & Altitud en los Andes</h3>
+            <svg class="glass" viewBox="0 0 24 24" fill="none"><path d="M12 3c-2.2 0-4 2-4 4.3 0 2.5 2 3.8 2 6 0 1.1.9 2 2 2s2-.9 2-2c0-2.2 2-3.5 2-6C16 5 14.2 3 12 3z" stroke="#C6A46B" stroke-width="1.2"/><path d="M12 15.3v3.7M9 21h6" stroke="#C6A46B" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <p class="synopsis">Contribución técnica sobre cómo la altitud cordillerana condiciona la amplitud térmica y la maduración de la uva.</p>
+          <a class="btn" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> Leer capítulo</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENTREVISTAS ============ -->
+  <section id="entrevistas">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Voces del vino</span>
+        <h2>Entrevistas & en medios</h2>
+        <p>Conversaciones con sommeliers, bodegueros y periodistas, además de participaciones en otros medios.</p>
+      </div>
+
+      <div class="timeline">
+
+        <div class="tl-item reveal">
+          <div class="tl-date">Mayo 2026</div>
+          <div class="tl-dot-col"><span class="dot"></span></div>
+          <div class="tl-content">
+            <h3>Entre viñas y ciencia</h3>
+            <span class="role">Entrevista a enóloga jefa, Bodega Los Alisos</span>
+            <p>Hablamos sobre fermentaciones espontáneas y el rol de las levaduras nativas en la identidad de un vino de origen.</p>
+            <a class="src" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver nota completa</a>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">Marzo 2026</div>
+          <div class="tl-dot-col"><span class="dot"></span></div>
+          <div class="tl-content">
+            <h3>La sommellerie después del examen</h3>
+            <span class="role">Entrevista a sommelier certificado, Court of Master Sommeliers</span>
+            <p>Qué cambia realmente en el paladar y en la carrera profesional después de rendir una certificación internacional.</p>
+            <a class="src" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver nota completa</a>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">Enero 2026</div>
+          <div class="tl-dot-col"><span class="dot"></span></div>
+          <div class="tl-content">
+            <h3>Panel: el futuro del vino sin alcohol</h3>
+            <span class="role">Participación en medio especializado</span>
+            <p>Mesa redonda sobre la desalcoholización y si realmente puede conservar la complejidad de un vino tradicional.</p>
+            <a class="src" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver nota completa</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TIPS & DATA ============ -->
+  <section id="tips">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">De copa rápida</span>
+        <h2>Data, recomendaciones & tips</h2>
+        <p>Ideas breves para servir mejor, maridar sin miedo y sorprender con datos curiosos de viñedo.</p>
+      </div>
+
+      <div class="grid-tips">
+
+        <article class="tip-card reveal">
+          <span class="cat">Servicio</span>
+          <div class="icon"><i class="fa-solid fa-temperature-low"></i></div>
+          <h3>Nunca sirvas el tinto "a temperatura ambiente"</h3>
+          <p>Esa frase nació en climas europeos fríos. Hoy la mayoría de los tintos se disfrutan mejor entre 15 y 18 °C, unos minutos en la heladera antes de servir.</p>
+        </article>
+
+        <article class="tip-card reveal">
+          <span class="cat">Maridaje</span>
+          <div class="icon"><i class="fa-solid fa-utensils"></i></div>
+          <h3>La acidez del vino busca la grasa del plato</h3>
+          <p>Un blanco de acidez alta corta la untuosidad de una salsa cremosa mejor que cualquier tinto: la regla de color es secundaria.</p>
+        </article>
+
+        <article class="tip-card reveal">
+          <span class="cat">Curiosidad</span>
+          <div class="icon"><i class="fa-solid fa-mountain"></i></div>
+          <h3>Los viñedos más altos del mundo superan los 3000 m</h3>
+          <p>En Salta, Argentina, hay parcelas cultivadas cerca de los 3100 metros sobre el nivel del mar, entre las más elevadas del planeta.</p>
+        </article>
+
+        <article class="tip-card reveal">
+          <span class="cat">Guarda</span>
+          <div class="icon"><i class="fa-solid fa-wine-bottle"></i></div>
+          <h3>No todo vino mejora con los años</h3>
+          <p>La mayoría de los vinos del mundo están pensados para tomarse dentro de los primeros tres años: la guarda larga es la excepción, no la regla.</p>
+        </article>
+
+        <article class="tip-card reveal">
+          <span class="cat">Cata</span>
+          <div class="icon"><i class="fa-solid fa-wine-glass"></i></div>
+          <h3>Girá la copa antes de oler, no después</h3>
+          <p>El oxígeno libera compuestos aromáticos apenas remueve el vino: la primera nariz, antes de airear, también dice mucho del estilo.</p>
+        </article>
+
+        <article class="tip-card reveal">
+          <span class="cat">Dato</span>
+          <div class="icon"><i class="fa-solid fa-seedling"></i></div>
+          <h3>Una parra puede vivir más de 100 años</h3>
+          <p>Las "vides viejas" (old vines) producen menos racimos pero de mayor concentración, muy buscadas para vinos de alta gama.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <h4>Cepa Viva</h4>
+        <p>Divulgación sobre viticultura, sommellerie y cultura del vino. Historias reales, servidas sin solemnidad.</p>
+      </div>
+      <div class="footer-social">
+        <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" target="_blank" rel="noopener" aria-label="Spotify"><i class="fa-brands fa-spotify"></i></a>
+        <a href="#" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#" target="_blank" rel="noopener" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© <span id="year"></span> Cepa Viva. Todos los derechos reservados.</span>
+      <span>Hecho con aprecio por el vino bien contado.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // Año dinámico en el footer
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // Menú móvil
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  if (toggle && links) {
+    toggle.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggle.innerHTML = isOpen
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
+    // Cerrar el menú al elegir un link (mobile)
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      });
+    });
+  }
+
+  // Animación de aparición al hacer scroll
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function(el){ observer.observe(el); });
+  } else {
+    // Fallback: si no hay soporte, mostrar todo directamente
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+})();
+</script>
+
+</body>
+</html>
